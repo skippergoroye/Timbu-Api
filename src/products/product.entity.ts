@@ -12,7 +12,7 @@ export class Product {
   name: string;
 
   @Column()
-  description: string;
+  price: number;
 
   @Column()
   imageUrl: string;
