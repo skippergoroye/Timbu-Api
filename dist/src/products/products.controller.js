@@ -19,13 +19,15 @@ const create_product_dto_1 = require("./dto/create-product.dto");
 const products_service_1 = require("./products.service");
 const multer_storage_cloudinary_1 = require("multer-storage-cloudinary");
 const cloudinary_config_1 = require("../config/cloudinary.config");
+const payments_service_1 = require("../payments/payments.service");
 const storage = new multer_storage_cloudinary_1.CloudinaryStorage({
     cloudinary: cloudinary_config_1.cloudinary,
     params: {},
 });
 let ProductController = class ProductController {
-    constructor(productService) {
+    constructor(productService, paymentsService) {
         this.productService = productService;
+        this.paymentsService = paymentsService;
     }
     async create(file, body) {
         if (!file) {
@@ -38,6 +40,9 @@ let ProductController = class ProductController {
     }
     async delete(id) {
         return this.productService.deleteProduct(id);
+    }
+    async checkout(body) {
+        return this.paymentsService.createPaymentIntent(body.cart, body.email);
     }
 };
 exports.ProductController = ProductController;
@@ -63,8 +68,16 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ProductController.prototype, "delete", null);
+__decorate([
+    (0, common_1.Post)('checkout'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], ProductController.prototype, "checkout", null);
 exports.ProductController = ProductController = __decorate([
     (0, common_1.Controller)('products'),
-    __metadata("design:paramtypes", [products_service_1.ProductService])
+    __metadata("design:paramtypes", [products_service_1.ProductService,
+        payments_service_1.PaymentsService])
 ], ProductController);
 //# sourceMappingURL=products.controller.js.map

@@ -15,6 +15,8 @@ import { ProductService } from './products.service';
 import * as multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import { cloudinary } from '../config/cloudinary.config';
+import { PaymentsService } from 'src/payments/payments.service';
+// import { PaymentsService } from 'src/ payments/payments.service';
 
 // Set up Multer Storage Engine with Cloudinary
 const storage = new CloudinaryStorage({
@@ -28,7 +30,11 @@ const storage = new CloudinaryStorage({
 
 @Controller('products')
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(
+    private readonly productService: ProductService,
+    private readonly paymentsService: PaymentsService
+    ,
+  ) {}
 
   // @Post()
   // @UseInterceptors(FileInterceptor('image', { storage }))
@@ -59,5 +65,10 @@ export class ProductController {
   @Delete(':id')
   async delete(@Param('id') id: number) {
     return this.productService.deleteProduct(id);
+  }
+
+  @Post('checkout')
+  async checkout(@Body() body: { cart: any[]; email: string }) {
+    return this.paymentsService.createPaymentIntent(body.cart, body.email);
   }
 }

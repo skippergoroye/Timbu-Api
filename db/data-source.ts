@@ -36,6 +36,7 @@
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 import { Product } from 'src/products/product.entity';
+import { Order } from 'src/products/order.entity';
 config();
 
 
@@ -47,9 +48,9 @@ export const dataSourceOptions: DataSourceOptions = {
   ssl: {
     rejectUnauthorized: false, // For local dev; in production, use proper certs
   },
-  entities: [Product],
+  entities: [Product, Order],
   migrations: ['src/migration/**/*.ts'],
-  synchronize: false,
+  synchronize: true,
 };
 
 
