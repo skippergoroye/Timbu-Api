@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   Delete,
   Param,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -32,8 +33,7 @@ const storage = new CloudinaryStorage({
 export class ProductController {
   constructor(
     private readonly productService: ProductService,
-    private readonly paymentsService: PaymentsService
-    ,
+    private readonly paymentsService: PaymentsService,
   ) {}
 
   // @Post()
@@ -68,7 +68,17 @@ export class ProductController {
   }
 
   @Post('checkout')
-  async checkout(@Body() body: { cart: any[]; email: string }) {
-    return this.paymentsService.createPaymentIntent(body.cart, body.email);
+  async checkout(@Body() body: any) {
+    console.log('Received checkout body:', body);
+
+    if (!Array.isArray(body.items)) {
+      throw new BadRequestException('Items must be an array');
+    }
+
+    const totalAmount = body.items.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    return this.paymentsService.createPaymentIntent(body.items, body.email);
   }
 }
