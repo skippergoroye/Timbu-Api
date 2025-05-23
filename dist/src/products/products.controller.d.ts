@@ -8,10 +8,7 @@ export declare class ProductController {
     create(file: Express.Multer.File, body: CreateProductDto): Promise<import("./product.entity").Product>;
     findAll(): Promise<import("./product.entity").Product[]>;
     delete(id: number): Promise<string>;
-    checkout(body: {
-        cart: any[];
-        email: string;
-    }): Promise<{
+    checkout(body: any): Promise<{
         clientSecret: string;
     }>;
 }

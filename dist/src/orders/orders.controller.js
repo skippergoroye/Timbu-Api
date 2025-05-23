@@ -19,11 +19,20 @@ let OrdersController = class OrdersController {
     constructor(ordersService) {
         this.ordersService = ordersService;
     }
+    async getAllOrders() {
+        return this.ordersService.getAllOrders();
+    }
     async getOrdersByEmail(email) {
         return this.ordersService.getOrdersByEmail(email);
     }
 };
 exports.OrdersController = OrdersController;
+__decorate([
+    (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], OrdersController.prototype, "getAllOrders", null);
 __decorate([
     (0, common_1.Get)(':email'),
     __param(0, (0, common_1.Param)('email')),

@@ -27,6 +27,11 @@ let OrdersService = class OrdersService {
             order: { id: 'DESC' },
         });
     }
+    async getAllOrders() {
+        return this.orderRepo.find({
+            order: { id: 'DESC' },
+        });
+    }
 };
 exports.OrdersService = OrdersService;
 exports.OrdersService = OrdersService = __decorate([

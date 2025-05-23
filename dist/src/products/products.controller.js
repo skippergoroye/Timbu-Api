@@ -42,7 +42,14 @@ let ProductController = class ProductController {
         return this.productService.deleteProduct(id);
     }
     async checkout(body) {
-        return this.paymentsService.createPaymentIntent(body.cart, body.email);
+        console.log('Received checkout body:', body);
+        if (!Array.isArray(body.items)) {
+            throw new common_1.BadRequestException('Items must be an array');
+        }
+        const totalAmount = body.items.reduce((total, item) => {
+            return total + item.price * item.quantity;
+        }, 0);
+        return this.paymentsService.createPaymentIntent(body.items, body.email);
     }
 };
 exports.ProductController = ProductController;
