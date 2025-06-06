@@ -32,6 +32,6 @@ __decorate([
 __decorate([
     (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CreateProductDto.prototype, "price", void 0);
 //# sourceMappingURL=create-product.dto.js.map

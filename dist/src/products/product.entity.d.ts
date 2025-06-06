@@ -3,7 +3,7 @@ export declare class Product {
     title: string;
     name: string;
     description: string;
-    price: number;
+    price: string;
     imageUrl: string;
     imagePublicId: string;
 }
