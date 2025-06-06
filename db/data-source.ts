@@ -31,36 +31,33 @@
 
 
 
-// Neon 
+// data-source.ts
 
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { config } from 'dotenv';
 import { Product } from 'src/products/product.entity';
 import { Order } from 'src/products/order.entity';
-config();
 
-
-
+config(); // Load environment variables
 
 export const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  url: process.env.DATABASE_URL, // should include user, password, host, db, etc.
-  ssl: {
-    rejectUnauthorized: false, // For local dev; in production, use proper certs
-  },
+  url: process.env.DATABASE_URL, // Full Neon DB URL from .env
+
+  // SSL is required for Neon
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+
+  // TypeORM setup
   entities: [Product, Order],
-  migrations: ['src/migration/**/*.ts'],
-  synchronize: true,
-  schema: 'public', 
+  migrations: ['dist/migration/**/*.js'], // Make sure you use JS after build
+  synchronize: true, // ⚠️ Disable in production and use migrations
+
+  schema: 'public', // 👈 Important for Neon
+  logging: process.env.NODE_ENV !== 'production',
 };
 
-
-
-
-
-
 const AppDataSource = new DataSource(dataSourceOptions);
-
 export default AppDataSource;
+
 
 
