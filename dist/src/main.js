@@ -41,7 +41,7 @@ dotenv.config({ path: `.env.${process.env.NODE_ENV || 'development'}` });
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
-        origin: ['http://localhost:3000', 'https://fays-hub-v3-git-master-skippergoroyegmailcoms-projects.vercel.app/'],
+        origin: ['http://localhost:3000', 'https://fays-hub-v3.vercel.app'],
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     });

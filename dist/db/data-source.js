@@ -9,12 +9,12 @@ const order_entity_1 = require("../src/products/order.entity");
 exports.dataSourceOptions = {
     type: 'postgres',
     url: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    },
+    ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     entities: [product_entity_1.Product, order_entity_1.Order],
-    migrations: ['src/migration/**/*.ts'],
-    synchronize: true,
+    migrations: ['dist/migration/**/*.js'],
+    synchronize: false,
+    schema: 'public',
+    logging: process.env.NODE_ENV !== 'production',
 };
 const AppDataSource = new typeorm_1.DataSource(exports.dataSourceOptions);
 exports.default = AppDataSource;
