@@ -51,6 +51,7 @@ export const dataSourceOptions: DataSourceOptions = {
   entities: [Product, Order],
   migrations: ['src/migration/**/*.ts'],
   synchronize: true,
+  schema: 'public', 
 };
 
 
