@@ -50,7 +50,7 @@ export const dataSourceOptions: DataSourceOptions = {
   // TypeORM setup
   entities: [Product, Order],
   migrations: ['dist/migration/**/*.js'], // Make sure you use JS after build
-  synchronize: false, // ⚠️ Disable in production and use migrations
+  synchronize: true, // ⚠️ Disable in production and use migrations
 
   schema: 'public', // 👈 Important for Neon
   logging: process.env.NODE_ENV !== 'production',
