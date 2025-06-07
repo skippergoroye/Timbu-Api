@@ -9,9 +9,7 @@ export class CreateProductDto {
   @IsNotEmpty()
   name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  description: string;
+
 
 
     @IsString()
